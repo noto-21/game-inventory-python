@@ -1,3 +1,14 @@
+import os
+import platform
+
+
+def clear():  # For clearing console
+    if platform.system() == 'Windows':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+
 def display_inventory(inv, inv_message):  # For showing an inventory
     print(inv_message)  # Print custom Inventory title
     item_total = 0
@@ -56,17 +67,22 @@ while True:
     if choice == 'X'.lower():  # End
         break
     elif choice.lower() not in str(shop_items.keys()).lower():  # Item not in shop
+        clear()
         print('\n"Hmm... don\'t think I have one of those..."\n')
     elif shop_items[choice.lower()]['amount'] == 0:  # Item exists in shop but is depleted
+        clear()
         print('\n"Sorry, I\'m all out of those!  Try again soon?..."\n')
     elif inventory['gold coin'] == 0 or shop_items[choice.lower()]['price'] > inventory['gold coin']:  # No coin :(
+        clear()
         print('\n"Hey, not cool!  Come back with some coin."\n')
     else:  # 'Base case'
+        clear()
         inventory = add(inventory, choice.lower())  # Add
         inventory['gold coin'] -= shop_items[choice.lower()]['price']  # Exchange currency
         shop_items[choice.lower()]['amount'] -= 1  # Remove item
         print('\n"Thanks!"\n')
 
+clear()
 print("""
 "Later, Traveller!"
 
