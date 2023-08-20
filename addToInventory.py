@@ -53,6 +53,9 @@ inventory = add_group(inventory, dragonLoot)  # Add dragon's loot to inventory
 
 shop_items = {'health potion': {'amount': 3, 'price': 3}, 'magika potion': {'amount': 5, 'price': 1},
               'sexy hat': {'amount': 1, 'price': 3}, 'dagger': {'amount': 1, 'price': 2}}  # Initialize shop
+
+clear()
+
 print("""You have defeated the dragon!
 
 As you begin your journey home, you happen across a wandering shopkeeper...
