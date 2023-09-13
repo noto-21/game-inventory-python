@@ -3,6 +3,9 @@ import platform
 import re
 
 plural = re.compile(r'[sS]$|[eE][sS]$|[iI][eE][sS]$')  # Regex for plural words
+number = re.compile(r'^[0-9]+')  # Regex for numbers at the beginning
+vowel = re.compile(r'^[aAeEiIoOuUyY]')  # Regex for words beginning with vowels
+
 
 def clear():  # For clearing console
     if platform.system() == 'Windows':
@@ -24,7 +27,7 @@ def display(disp, disp_mssg, shop=False):
     print(f"Item Count: {str(item_total)}")  # Print total items
 
 
-def add(inv, added_items = list()):
+def add(inv, added_items):
     if type(added_items) == list:
         for adding in added_items:
             if adding.lower() not in str(inv.keys()).lower():
@@ -66,12 +69,47 @@ while True:
     display(shop_items, "Stock:", True)
     print('-----------------------')
     display(inventory, "Inventory:")
-    choice = input('\nBuy what? (\'X\' to cancel): ').lower()
+    choice = input('\nBuy what? (\'X\' to cancel): ').lower().strip()
+
+    # If user input contains key from 'shop_items', let user know
+    is_in = False
+    for words in choice.lower().split(' '):  # Each word
+        check = ''
+        for chars in words.lower():  # Each character in each word
+            check += chars  # Assemble a 'test-word'
+            if check in shop_items:  # Test 'check' against the keys
+                is_in = True
+                break
+
     if choice == 'X'.lower():  # End
         break
-    elif choice.lower() not in str(shop_items.keys()).lower():  # Item not in shop
+    elif choice == '' or choice.isspace():  # User inputs nothing/spaces only
         clear()
-        print(f'\n"Hmm... don\'t think I have {"a" if plural.search(choice) is None else "any"} {choice.title()}..."\n')
+        print('\n"...Uhh, hello?"\n')
+    elif choice.lower() not in shop_items:  # Item not in shop
+        clear()
+
+        # 'pre' should be either 'a', 'an', 'any', or empty depending on the user's input
+        pre = ''
+        if number.search(choice):
+            pass  # 'pre' is blank if a number precedes in the input
+        elif not plural.search(choice):  # If not plural input
+            if vowel.search(choice):  # Input begins with a vowel
+                pre = ' an'
+            else:  # Input does not begin with a vowel
+                pre = ' a'
+        elif plural.search(choice):  # Input is plural
+            pre = ' any'
+
+        if not is_in:
+            print(f'\n"Hmm...don\'t think I have'
+                  f'{pre} {choice.title()}{"s" if not plural.search(choice) and number.search(choice) else ""}'
+                  f'..."\n')
+        else:
+            print(f'\n"Oh, I have'
+                  f'{pre if pre != " any" else " some"} '
+                  f'{choice.title()}{"s" if not plural.search(choice) and number.search(choice) else ""}'
+                  f'!  If you want one, just give me the name!"\n')
     elif shop_items[choice.lower()]['amount'] == 0:  # Item exists in shop but is depleted
         clear()
         print('\n"Sorry, I\'m all out of those!  Try again soon?..."\n')
