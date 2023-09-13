@@ -71,7 +71,7 @@ while True:
         break
     elif choice.lower() not in str(shop_items.keys()).lower():  # Item not in shop
         clear()
-        print(f'\n"Hmm... don\'t think I have {"a" if plural.search(choice) == None else "any"} {choice.title()}..."\n')
+        print(f'\n"Hmm... don\'t think I have {"a" if plural.search(choice) is None else "any"} {choice.title()}..."\n')
     elif shop_items[choice.lower()]['amount'] == 0:  # Item exists in shop but is depleted
         clear()
         print('\n"Sorry, I\'m all out of those!  Try again soon?..."\n')
