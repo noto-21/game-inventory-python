@@ -9,22 +9,17 @@ def clear():  # For clearing console
         os.system('clear')
 
 
-def display_inventory(inv, inv_message):  # For showing an inventory
-    print(inv_message)  # Print custom Inventory title
+def display(disp, disp_mssg, shop=False):
+    print(disp_mssg)  # Print custom title
     item_total = 0
-    for k, v in inv.items():
-        print('(' + str(v) + ') ' + ' ' + k.title())  # Print inventory items
-        item_total += v
-    print("Item Count: " + str(item_total))
-
-
-def display_shop(sho, sho_message):  # For displaying shops
-    print(sho_message)  # Print custom Shop title
-    item_total = 0
-    for k, v in sho.items():
-        print('(' + str(v['amount']) + ')  ' + k.title() + ' -> ' + str(v['price']) + ' coin(s)')  # Print items +
-        # prices
-        item_total += v['amount']
+    for k, v in disp.items():
+        if shop:
+            print('(' + str(v['amount']) + ')  ' + k.title() + ' -> ' + str(v['price']) + ' coin(s)')  # Print items +
+            # prices
+            item_total += v['amount']
+        else:
+            print('(' + str(v) + ') ' + ' ' + k.title())  # Print inventory items
+            item_total += v
     print("Item Count: " + str(item_total))
 
 
@@ -63,9 +58,9 @@ As you begin your journey home, you happen across a wandering shopkeeper...
 "Would you care to buy some items from my store?"
 """)
 while True:
-    display_shop(shop_items, "Stock:")
+    display(shop_items, "Stock:", True)
     print('-----------------------')
-    display_inventory(inventory, "Inventory:")
+    display(inventory, "Inventory:")
     choice = input('\nBuy what? (\'X\' to cancel): ').lower()
     if choice == 'X'.lower():  # End
         break
