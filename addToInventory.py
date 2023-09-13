@@ -23,28 +23,25 @@ def display(disp, disp_mssg, shop=False):
     print("Item Count: " + str(item_total))
 
 
-def add_group(inv, added_items):  # Batch adding to inventory (Lists, etc.)
-    for adding in added_items:
-        if adding.lower() not in str(inv.keys()).lower():
-            inv.setdefault(adding, 1)  # New item
-        else:
-            inv[adding] += 1  # Existing item
-
-    return inv
-
-
-def add(inv, adding):  # Single item add
-    if adding.lower() not in str(inv.keys()).lower():
-        inv.setdefault(adding, 1)  # New item
+def add(inv, added_items = list()):
+    if type(added_items) == list:
+        for adding in added_items:
+            if adding.lower() not in str(inv.keys()).lower():
+                inv.setdefault(adding, 1)  # New item
+            else:
+                inv[adding] += 1  # Existing item
     else:
-        inv[adding] += 1  # Existing item
+        if added_items.lower() not in str(inv.keys()).lower():
+            inv.setdefault(added_items, 1)  # New item
+        else:
+            inv[added_items] += 1  # Existing item
 
     return inv
 
 
 inventory = {'gold coin': 0, 'rope': 1}  # Initialize
 dragonLoot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby', 'gold coin', 'gold coin', 'gold coin']
-inventory = add_group(inventory, dragonLoot)  # Add dragon's loot to inventory
+inventory = add(inventory, dragonLoot)  # Add dragon's loot to inventory
 
 shop_items = {'health potion': {'amount': 3, 'price': 3}, 'magika potion': {'amount': 5, 'price': 1},
               'sexy hat': {'amount': 1, 'price': 3}, 'dagger': {'amount': 1, 'price': 2}}  # Initialize shop
