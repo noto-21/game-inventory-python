@@ -73,13 +73,8 @@ while True:
 
     # If user input contains key from 'shop_items', let user know
     is_in = False
-    for words in choice.lower().split(' '):  # Each word
-        check = ''
-        for chars in words.lower():  # Each character in each word
-            check += chars  # Assemble a 'test-word'
-            if check in shop_items:  # Test 'check' against the keys
-                is_in = True
-                break
+    if any(ke in choice for ke in list(shop_items.keys())):
+        is_in = True
 
     if choice == 'X'.lower():  # End
         break
@@ -103,13 +98,11 @@ while True:
 
         if not is_in:
             print(f'\n"Hmm...don\'t think I have'
-                  f'{pre} {choice.title()}{"s" if not plural.search(choice) and number.search(choice) else ""}'
+                  f'{pre} \'{choice.title()}{"s" if not plural.search(choice) and number.search(choice) else ""}\''
                   f'..."\n')
         else:
-            print(f'\n"Oh, I have'
-                  f'{pre if pre != " any" else " some"} '
-                  f'{choice.title()}{"s" if not plural.search(choice) and number.search(choice) else ""}'
-                  f'!  If you want one, just give me the name!"\n')
+            print(f'\n"Oh, I think I know what you\'re talking about!  '
+                  f'Just give me the exact name of what you\'re looking for, and I\'ll see what I can do."\n')
     elif shop_items[choice.lower()]['amount'] == 0:  # Item exists in shop but is depleted
         clear()
         print('\n"Sorry, I\'m all out of those!  Try again soon?..."\n')
