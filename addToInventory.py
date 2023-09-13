@@ -39,6 +39,13 @@ def add(inv, added_items = list()):
     return inv
 
 
+def transaction(inv, shop, item):
+    inv = add(inv, item.lower())  # Add
+    inv['gold coin'] -= shop[item.lower()]['price']  # Exchange currency
+    shop[item.lower()]['amount'] -= 1  # Remove item
+    return '\n"Thanks!"\n'  # Return message
+
+
 inventory = {'gold coin': 0, 'rope': 1}  # Initialize
 dragonLoot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby', 'gold coin', 'gold coin', 'gold coin']
 inventory = add(inventory, dragonLoot)  # Add dragon's loot to inventory
@@ -72,10 +79,7 @@ while True:
         print('\n"Hey, not cool!  Come back with some coin."\n')
     else:  # 'Base case'
         clear()
-        inventory = add(inventory, choice.lower())  # Add
-        inventory['gold coin'] -= shop_items[choice.lower()]['price']  # Exchange currency
-        shop_items[choice.lower()]['amount'] -= 1  # Remove item
-        print('\n"Thanks!"\n')
+        print(transaction(inventory, shop_items, choice))  # Transaction
 
 clear()
 print("""
