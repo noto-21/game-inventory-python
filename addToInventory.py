@@ -81,6 +81,9 @@ while True:
     elif choice == '' or choice.isspace():  # User inputs nothing/spaces only
         clear()
         print('\n"...Uhh, hello?"\n')
+    elif len(choice.split(' ')) > 2 and not is_in:  # User inputs more than one word
+        clear()
+        print('\n"Sorry, it\'s been a long day.  Try to speak in shorter phrases, please?"\n')
     elif choice.lower() not in shop_items:  # Item not in shop
         clear()
 
