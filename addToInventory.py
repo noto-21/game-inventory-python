@@ -1,6 +1,8 @@
 import os
 import platform
+import re
 
+plural = re.compile(r'[sS]$|[eE][sS]$|[iI][eE][sS]$')  # Regex for plural words
 
 def clear():  # For clearing console
     if platform.system() == 'Windows':
@@ -14,13 +16,12 @@ def display(disp, disp_mssg, shop=False):
     item_total = 0
     for k, v in disp.items():
         if shop:
-            print('(' + str(v['amount']) + ')  ' + k.title() + ' -> ' + str(v['price']) + ' coin(s)')  # Print items +
-            # prices
+            print(f'({str(v["amount"])}) {k.title()} -> {str(v["price"])} coin(s)')  # Print items + prices
             item_total += v['amount']
         else:
-            print('(' + str(v) + ') ' + ' ' + k.title())  # Print inventory items
+            print(f'({str(v)}) {k.title()}')  # Print inventory items
             item_total += v
-    print("Item Count: " + str(item_total))
+    print(f"Item Count: {str(item_total)}")  # Print total items
 
 
 def add(inv, added_items = list()):
@@ -70,7 +71,7 @@ while True:
         break
     elif choice.lower() not in str(shop_items.keys()).lower():  # Item not in shop
         clear()
-        print('\n"Hmm... don\'t think I have one of those..."\n')
+        print(f'\n"Hmm... don\'t think I have {"a" if plural.search(choice) == None else "any"} {choice.title()}..."\n')
     elif shop_items[choice.lower()]['amount'] == 0:  # Item exists in shop but is depleted
         clear()
         print('\n"Sorry, I\'m all out of those!  Try again soon?..."\n')
