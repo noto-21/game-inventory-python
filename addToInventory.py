@@ -2,9 +2,12 @@ import os
 import platform
 import re
 
-plural = re.compile(r'[sS]$|[eE][sS]$|[iI][eE][sS]$')  # Regex for plural words
-number = re.compile(r'^[0-9]+')  # Regex for numbers at the beginning
-vowel = re.compile(r'^[aAeEiIoOuUyY]')  # Regex for words beginning with vowels
+# Regex for plural words
+plural = re.compile(r'[sS]$|[eE][sS]$|[iI][eE][sS]$|[iI][oO][nN]$|[gG][nN][eE]$|[eE][aA][sS][tT]$')
+# Regex for numbers at the beginning
+number = re.compile(r'^[0-9]+')
+# Regex for words beginning with vowels
+vowel = re.compile(r'^[aAeEiIoOuU]')
 
 
 def clear():  # For clearing console
