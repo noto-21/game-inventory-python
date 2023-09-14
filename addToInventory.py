@@ -3,7 +3,7 @@ import platform
 import re
 
 # Regex for plural words
-plural = re.compile(r'[sS]$|[eE][sS]$|[iI][eE][sS]$|[iI][oO][nN]$|[gG][nN][eE]$|[eE][aA][sS][tT]$')
+plural = re.compile(r'[sS]$|[eE][sS]$|[iI][eE][sS]$|[iI][oO][nN]$|[gG][nN][eE]$|[eE][aA][sS][tT]$|[iI][lL]$')
 # Regex for numbers at the beginning
 number = re.compile(r'^[0-9]+')
 # Regex for words beginning with vowels
