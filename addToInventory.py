@@ -73,6 +73,7 @@ while True:
     print('-----------------------')
     display(inventory, "Inventory:")
     choice = input('\nBuy what? (\'X\' to cancel): ').lower().strip()
+    choice_amnt = choice.split(' ')[0]  # If user inputs a number of items, this will be the number
 
     # If user input contains key from 'shop_items', let user know
     is_in = False
@@ -109,6 +110,7 @@ while True:
         else:
             print(f'\n"Oh, I think I know what you\'re talking about!  '
                   f'Just give me the exact name of what you\'re looking for, and I\'ll see what I can do."\n')
+
     elif shop_items[choice.lower()]['amount'] == 0:  # Item exists in shop but is depleted
         clear()
         print('\n"Sorry, I\'m all out of those!  Try again soon?..."\n')
