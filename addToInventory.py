@@ -52,6 +52,11 @@ def transaction(inv, shop, item):
     shop[item.lower()]['amount'] -= 1  # Remove item
     return '\n"Thanks!"\n'  # Return message
 
+def show_shop():
+    display(shop_items, "Stock:", True)
+    print('-----------------------')
+    display(inventory, "Inventory:")
+
 
 inventory = {'gold coin': 0, 'rope': 1}  # Initialize
 dragonLoot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby', 'gold coin', 'gold coin', 'gold coin']
@@ -68,11 +73,10 @@ As you begin your journey home, you happen across a wandering shopkeeper...
 
 "Would you care to buy some items from my store?"
 """)
+
 while True:
-    display(shop_items, "Stock:", True)
-    print('-----------------------')
-    display(inventory, "Inventory:")
-    choice = input('\nBuy what? (\'X\' to cancel): ').lower().strip()
+    show_shop()
+    choice = input('\nBuy what?\n(\'Q\'/\'X\'/\'Exit\' to cancel)\n> ').lower().strip()
     choice_amnt = choice.split(' ')[0]  # If user inputs a number of items, this will be the number
 
     # If user input contains key from 'shop_items', let user know
@@ -80,7 +84,7 @@ while True:
     if any(ke in choice for ke in list(shop_items.keys())):
         is_in = True
 
-    if choice == 'X'.lower():  # End
+    if choice == 'exit' or choice == 'q' or choice == 'x':  # End
         break
     elif choice == '' or choice.isspace():  # User inputs nothing/spaces only
         clear()
